@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { Course } from '../../../models/courses-model';
 
 @Injectable({
@@ -6,7 +7,7 @@ import { Course } from '../../../models/courses-model';
 })
 export class CoursesService {
 
-  private courses: Course[] = [
+  private coursesSubject = new BehaviorSubject<Course[]>([
     {
       id: 1,
       title: 'Angular Basics',
@@ -25,26 +26,46 @@ export class CoursesService {
       description: 'Reactive programming',
       status: 'completed'
     }
-  ];
+  ]);
 
+  courses$ = this.coursesSubject.asObservable();
+
+  // 🔹 LISTA
   getCourses(): Course[] {
-    return this.courses;
+    return this.coursesSubject.value;
   }
 
+  // 🔹 EGY KURZUS
   getCourseById(id: number): Course | undefined {
-    return this.courses.find(course => course.id === id);
+    return this.coursesSubject.value.find(c => c.id === id);
   }
 
+  // 🔹 CREATE
   addCourse(course: Course): void {
-  const newId =
-    this.courses.length > 0
-      ? Math.max(...this.courses.map(c => c.id)) + 1
-      : 1;
+    const courses = this.coursesSubject.value;
 
-  this.courses.push({
-    ...course,
-    id: newId
-  });
-}
+    const newCourse: Course = {
+      ...course,
+      id: courses.length
+        ? Math.max(...courses.map(c => c.id)) + 1
+        : 1
+    };
 
+    this.coursesSubject.next([...courses, newCourse]);
+  }
+
+  // 🔹 UPDATE
+  updateCourse(updated: Course): void {
+    const updatedCourses = this.coursesSubject.value.map(course =>
+      course.id === updated.id ? updated : course
+    );
+
+    this.coursesSubject.next(updatedCourses);
+  }
+
+  // 🔹 DELETE
+  deleteCourse(id: number): void {
+    const filtered = this.coursesSubject.value.filter(c => c.id !== id);
+    this.coursesSubject.next(filtered);
+  }
 }

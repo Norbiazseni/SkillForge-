@@ -1,50 +1,38 @@
-<h1>Add new course</h1>
+<h1>{{ isEdit ? 'Edit course' : 'Add new course' }}</h1>
 
-<form (ngSubmit)="submit()" #courseForm="ngForm">
+<form (ngSubmit)="submit()" #f="ngForm">
 
-  <label>
-    Title:
-    <input
-      type="text"
-      name="title"
-      [(ngModel)]="course.title"
-      required
-    />
-  </label>
+  <input
+    type="text"
+    name="title"
+    [(ngModel)]="course.title"
+    placeholder="Title"
+    required
+  />
 
   <br /><br />
 
-  <label>
-    Description:
-    <textarea
-      name="description"
-      [(ngModel)]="course.description"
-      required
-    ></textarea>
-  </label>
+  <textarea
+    name="description"
+    [(ngModel)]="course.description"
+    placeholder="Description"
+    required
+  ></textarea>
 
   <br /><br />
 
-  <label>
-    Status:
-    <select
-      name="status"
-      [(ngModel)]="course.status"
-    >
-      <option value="planned">Planned</option>
-      <option value="active">Active</option>
-      <option value="completed">Completed</option>
-    </select>
-  </label>
+  <select name="status" [(ngModel)]="course.status">
+    <option value="planned">Planned</option>
+    <option value="active">Active</option>
+    <option value="completed">Completed</option>
+  </select>
 
   <br /><br />
 
-  <button type="submit" [disabled]="courseForm.invalid">
-    Save
+  <button type="submit" [disabled]="f.invalid">
+    {{ isEdit ? 'Update' : 'Save' }}
   </button>
 
-  <a routerLink="/courses" style="margin-left: 10px">
-    Cancel
-  </a>
+  <a routerLink="/courses">Cancel</a>
 
 </form>

@@ -1,33 +1,120 @@
+.courses-container {
+  max-width: 800px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.header h1 {
+  margin: 0;
+}
+
 .add-btn {
   height: 40px;
-  padding: 0 16px;
-  margin-bottom: 16px;
+  padding: 0 20px;
   border: none;
   border-radius: 6px;
   background: #2563eb;
   color: white;
+  font-weight: 500;
   cursor: pointer;
+  transition: background 0.2s;
+}
+
+.add-btn:hover {
+  background: #1d4ed8;
 }
 
 .course-list {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .course-card {
   background: white;
-  padding: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  transition: box-shadow 0.2s;
+}
+
+.course-card:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.course-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
   margin-bottom: 12px;
-  border-radius: 6px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.course-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.course-header h3 a {
+  color: #1e293b;
+  text-decoration: none;
+}
+
+.course-header h3 a:hover {
+  color: #2563eb;
+}
+
+.course-description {
+  color: #64748b;
+  margin: 0 0 16px 0;
+  line-height: 1.5;
+}
+
+.course-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.edit-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-size: 0.875rem;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.edit-link:hover {
+  background: #eff6ff;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #dc2626;
+  cursor: pointer;
+  font-size: 0.875rem;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.delete-btn:hover {
+  background: #fef2f2;
 }
 
 .badge {
   display: inline-block;
-  margin-top: 8px;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: capitalize;
   color: white;
 }
 
@@ -40,5 +127,5 @@
 }
 
 .completed {
-  background: #1e293b;
+  background: #64748b;
 }
