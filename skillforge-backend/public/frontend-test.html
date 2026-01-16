@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillForge API - Frontend Teszt</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .api-status {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .api-status h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .api-status code {
+            background: #e9ecef;
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: #d63384;
+            font-weight: 600;
+        }
+        
+        .status-indicator {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status-indicator.success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+        
+        .status-indicator.error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+        
+        .status-indicator.loading {
+            background: #fff3cd;
+            color: #856404;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        
+        .results {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .course-card {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        
+        .course-card:hover {
+            transform: translateX(5px);
+        }
+        
+        .course-title {
+            font-size: 1.4em;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .course-description {
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .badges {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        .badge.published { background: #d4edda; color: #155724; }
+        .badge.draft { background: #fff3cd; color: #856404; }
+        .badge.archived { background: #e2e3e5; color: #383d41; }
+        .badge.beginner { background: #cfe2ff; color: #084298; }
+        .badge.intermediate { background: #e7f1ff; color: #055160; }
+        .badge.advanced { background: #f8d7da; color: #721c24; }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1em;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 SkillForge API</h1>
+            <p>Backend-Frontend Kapcsolat Tesztelő</p>
+        </div>
+        
+        <div class="content">
+            <div class="api-status">
+                <h3>📡 API Információk</h3>
+                <p><strong>Backend URL:</strong> <code id="backendUrl">http://127.0.0.1:8000</code></p>
+                <p><strong>API Base URL:</strong> <code id="apiUrl">http://127.0.0.1:8000/api</code></p>
+                <p><strong>CORS:</strong> <code>Engedélyezve (*)</code></p>
+            </div>
+            
+            <div id="status" class="status-indicator loading">
+                ⏳ Várakozás az API tesztelésre...
+            </div>
+            
+            <div class="stats" id="stats" style="display: none;">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalCourses">0</div>
+                    <div class="stat-label">📚 Kurzusok</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalStudents">0</div>
+                    <div class="stat-label">👨‍🎓 Hallgatók</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="responseTime">0ms</div>
+                    <div class="stat-label">⚡ Válaszidő</div>
+                </div>
+            </div>
+            
+            <div class="buttons">
+                <button onclick="testConnection()">🔌 Kapcsolat Teszt</button>
+                <button onclick="loadCourses()">📚 Kurzusok Betöltése</button>
+                <button onclick="loadStudents()">👨‍🎓 Hallgatók Betöltése</button>
+                <button onclick="createTestCourse()">➕ Teszt Kurzus Létrehozása</button>
+                <button onclick="clearResults()">🗑️ Törlés</button>
+            </div>
+            
+            <div id="results" class="results" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://127.0.0.1:8000/api';
+        let startTime;
+        
+        function updateStatus(message, type = 'loading') {
+            const statusDiv = document.getElementById('status');
+            const icons = { loading: '⏳', success: '✅', error: '❌' };
+            statusDiv.textContent = `${icons[type]} ${message}`;
+            statusDiv.className = `status-indicator ${type}`;
+        }
+        
+        function showResults(html) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = html;
+            resultsDiv.style.display = 'block';
+        }
+        
+        function clearResults() {
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('stats').style.display = 'none';
+            updateStatus('Várakozás az API tesztelésre...', 'loading');
+        }
+        
+        async function testConnection() {
+            updateStatus('Kapcsolat tesztelése...', 'loading');
+            startTime = Date.now();
+            
+            try {
+                const response = await fetch(`${API_URL}/courses?per_page=1`);
+                const responseTime = Date.now() - startTime;
+                const data = await response.json();
+                
+                if (response.ok) {
+                    updateStatus('Backend kapcsolat sikeres! ✅', 'success');
+                    document.getElementById('responseTime').textContent = responseTime + 'ms';
+                    document.getElementById('stats').style.display = 'grid';
+                    
+                    showResults(`
+                        <h3 style="color: #28a745; margin-bottom: 15px;">✅ Sikeres Kapcsolat!</h3>
+                        <p><strong>Státusz:</strong> ${response.status} ${response.statusText}</p>
+                        <p><strong>Válaszidő:</strong> ${responseTime}ms</p>
+                        <p><strong>Adatbázisban található kurzusok:</strong> ${data.total || 0}</p>
+                        <p style="margin-top: 15px; color: #28a745; font-weight: bold;">
+                            🎉 A backend tökéletesen működik! Most már használhatod frontend-ből is.
+                        </p>
+                    `);
+                } else {
+                    updateStatus(`HTTP ${response.status} hiba`, 'error');
+                }
+            } catch (error) {
+                updateStatus(`Kapcsolódási hiba: ${error.message}`, 'error');
+                showResults(`
+                    <h3 style="color: #dc3545;">❌ Nem sikerült csatlakozni</h3>
+                    <p><strong>Hiba:</strong> ${error.message}</p>
+                    <h4 style="margin-top: 20px;">Lehetséges megoldások:</h4>
+                    <ul style="line-height: 2;">
+                        <li>✅ Ellenőrizd, hogy a backend fut-e: <code>php artisan serve</code></li>
+                        <li>✅ Helyes URL: <code>${API_URL}</code></li>
+                        <li>✅ CORS config létezik: <code>config/cors.php</code></li>
+                        <li>✅ Cache törlés: <code>php artisan config:clear</code></li>
+                    </ul>
+                `);
+            }
+        }
+        
+        async function loadCourses() {
+            updateStatus('Kurzusok betöltése...', 'loading');
+            startTime = Date.now();
+            
+            try {
+                const response = await fetch(`${API_URL}/courses?per_page=50`);
+                const responseTime = Date.now() - startTime;
+                const data = await response.json();
+                
+                if (response.ok) {
+                    updateStatus(`${data.total} kurzus sikeresen betöltve!`, 'success');
+                    
+                    document.getElementById('totalCourses').textContent = data.total;
+                    document.getElementById('responseTime').textContent = responseTime + 'ms';
+                    document.getElementById('stats').style.display = 'grid';
+                    
+                    if (data.data.length === 0) {
+                        showResults(`
+                            <h3>📚 Kurzusok (0)</h3>
+                            <p>Még nincs kurzus az adatbázisban. Hozz létre egyet a "Teszt Kurzus Létrehozása" gombbal!</p>
+                        `);
+                    } else {
+                        const coursesHTML = data.data.map(course => `
+                            <div class="course-card">
+                                <div class="course-title">${course.title}</div>
+                                <div class="course-description">${course.description}</div>
+                                <div class="badges">
+                                    <span class="badge ${course.status}">${course.status}</span>
+                                    <span class="badge ${course.difficulty}">${course.difficulty}</span>
+                                    <span class="badge">ID: ${course.id}</span>
+                                </div>
+                            </div>
+                        `).join('');
+                        
+                        showResults(`
+                            <h3>📚 Kurzusok (${data.data.length}/${data.total})</h3>
+                            ${coursesHTML}
+                        `);
+                    }
+                } else {
+                    updateStatus(`HTTP ${response.status} hiba`, 'error');
+                }
+            } catch (error) {
+                updateStatus(`Hiba: ${error.message}`, 'error');
+            }
+        }
+        
+        async function loadStudents() {
+            updateStatus('Hallgatók betöltése...', 'loading');
+            startTime = Date.now();
+            
+            try {
+                const response = await fetch(`${API_URL}/students?per_page=50`);
+                const responseTime = Date.now() - startTime;
+                const data = await response.json();
+                
+                if (response.ok) {
+                    updateStatus(`${data.total} hallgató sikeresen betöltve!`, 'success');
+                    
+                    document.getElementById('totalStudents').textContent = data.total;
+                    document.getElementById('responseTime').textContent = responseTime + 'ms';
+                    document.getElementById('stats').style.display = 'grid';
+                    
+                    const studentsHTML = data.data.map(student => `
+                        <div class="course-card">
+                            <div class="course-title">👤 ${student.name}</div>
+                            <p><strong>📧 Email:</strong> ${student.email}</p>
+                            <p><strong>📚 Kurzusok:</strong> ${student.courses_count || 0}</p>
+                            <p><strong>📅 Regisztrálva:</strong> ${new Date(student.created_at).toLocaleDateString('hu-HU')}</p>
+                        </div>
+                    `).join('');
+                    
+                    showResults(`
+                        <h3>👨‍🎓 Hallgatók (${data.data.length}/${data.total})</h3>
+                        ${studentsHTML}
+                    `);
+                } else {
+                    updateStatus(`HTTP ${response.status} hiba`, 'error');
+                }
+            } catch (error) {
+                updateStatus(`Hiba: ${error.message}`, 'error');
+            }
+        }
+        
+        async function createTestCourse() {
+            updateStatus('Új kurzus létrehozása...', 'loading');
+            
+            const newCourse = {
+                title: `Frontend Teszt Kurzus - ${new Date().toLocaleTimeString('hu-HU')}`,
+                description: 'Ez egy automatikusan létrehozott teszt kurzus a frontend-backend kapcsolat teszteléséhez.',
+                status: 'published',
+                difficulty: 'beginner',
+                instructor_id: 1
+            };
+            
+            try {
+                const response = await fetch(`${API_URL}/courses`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(newCourse)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    updateStatus('Kurzus sikeresen létrehozva! 🎉', 'success');
+                    showResults(`
+                        <h3 style="color: #28a745;">✅ Új Kurzus Létrehozva!</h3>
+                        <div class="course-card">
+                            <div class="course-title">${data.data.title}</div>
+                            <div class="course-description">${data.data.description}</div>
+                            <div class="badges">
+                                <span class="badge ${data.data.status}">${data.data.status}</span>
+                                <span class="badge ${data.data.difficulty}">${data.data.difficulty}</span>
+                                <span class="badge">ID: ${data.data.id}</span>
+                            </div>
+                        </div>
+                        <p style="margin-top: 20px; color: #28a745; font-weight: bold;">
+                            ✅ POST kérés sikeres! A backend fogadta és feldolgozta az adatokat.
+                        </p>
+                    `);
+                } else {
+                    updateStatus(`Hiba: ${response.status}`, 'error');
+                    showResults(`<pre>${JSON.stringify(data, null, 2)}</pre>`);
+                }
+            } catch (error) {
+                updateStatus(`Hiba: ${error.message}`, 'error');
+            }
+        }
+        
+        // Automatikus teszt indítása oldal betöltéskor
+        window.addEventListener('load', () => {
+            setTimeout(testConnection, 500);
+        });
+    </script>
+</body>
+</html>
