@@ -1,0 +1,50 @@
+<h1>Add new course</h1>
+
+<form (ngSubmit)="submit()" #courseForm="ngForm">
+
+  <label>
+    Title:
+    <input
+      type="text"
+      name="title"
+      [(ngModel)]="course.title"
+      required
+    />
+  </label>
+
+  <br /><br />
+
+  <label>
+    Description:
+    <textarea
+      name="description"
+      [(ngModel)]="course.description"
+      required
+    ></textarea>
+  </label>
+
+  <br /><br />
+
+  <label>
+    Status:
+    <select
+      name="status"
+      [(ngModel)]="course.status"
+    >
+      <option value="planned">Planned</option>
+      <option value="active">Active</option>
+      <option value="completed">Completed</option>
+    </select>
+  </label>
+
+  <br /><br />
+
+  <button type="submit" [disabled]="courseForm.invalid">
+    Save
+  </button>
+
+  <a routerLink="/courses" style="margin-left: 10px">
+    Cancel
+  </a>
+
+</form>
