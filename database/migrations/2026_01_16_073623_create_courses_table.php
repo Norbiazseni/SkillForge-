@@ -15,7 +15,7 @@ return new class extends Migration
         $table->id();
         $table->string('title');
         $table->text('description')->nullable();
-        $table->enum('status', ['planned','active','completed']);
+        $table->enum('status', ['draft','published','archived'])->default('draft');
         $table->enum('difficulty', ['beginner','intermediate','advanced']);
         $table->foreignId('instructor_id')->constrained()->cascadeOnDelete();
         $table->timestamps();
