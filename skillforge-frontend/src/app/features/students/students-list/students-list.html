@@ -1,0 +1,18 @@
+<h1>Students</h1>
+
+<a routerLink="/students/new">➕ Add student</a>
+
+
+<ul>
+  <li *ngFor="let student of students">
+    <strong>{{ student.name }}</strong><br>
+    {{ student.email }}<br>
+    Courses: {{ student.courses.length }}
+
+    <br>
+
+    <a [routerLink]="['/students', student.id, 'edit']">✏️ Edit</a>
+    |
+    <button (click)="delete(student.id)">🗑 Delete</button>
+  </li>
+</ul>

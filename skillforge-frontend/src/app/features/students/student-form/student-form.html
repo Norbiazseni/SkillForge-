@@ -1,0 +1,38 @@
+<h1>{{ isEdit ? 'Edit student' : 'New student' }}</h1>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+  <label>
+    Name<br>
+    <input formControlName="name">
+  </label>
+
+  <br><br>
+
+  <label>
+    Email<br>
+    <input formControlName="email">
+  </label>
+
+  <br><br>
+
+  <h3>Courses</h3>
+
+  <div *ngFor="let course of courses">
+    <label>
+      <input
+        type="checkbox"
+        [checked]="form.value.courses?.includes(course.id)"
+        (change)="toggleCourse(course.id)"
+      >
+      {{ course.title }}
+    </label>
+  </div>
+
+  <br>
+
+  <button type="submit">
+    {{ isEdit ? 'Update' : 'Save' }}
+  </button>
+
+</form>
