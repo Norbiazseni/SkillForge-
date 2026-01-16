@@ -17,17 +17,23 @@ export class DashboardService {
         map(courses => courses.length)
       );
 
+    // Active = published (backend státusz)
     this.activeCourses$ = this.coursesService.courses$
       .pipe(
         map(courses =>
-          courses.filter(c => c.status === 'active').length
+          courses.filter(c => 
+            c.status === 'active' || c.status === 'published'
+          ).length
         )
       );
 
+    // Completed = archived (backend státusz)
     this.completedCourses$ = this.coursesService.courses$
       .pipe(
         map(courses =>
-          courses.filter(c => c.status === 'completed').length
+          courses.filter(c => 
+            c.status === 'completed' || c.status === 'archived'
+          ).length
         )
       );
   }

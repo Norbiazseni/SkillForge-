@@ -3,18 +3,20 @@
 <div class="stats">
 
   <div class="card">
-    <h3>Total courses</h3>
+    <h3>Total Courses</h3>
     <p>{{ totalCourses$ | async }}</p>
   </div>
 
   <div class="card">
-    <h3>Active courses</h3>
+    <h3>Active Courses</h3>
     <p>{{ activeCourses$ | async }}</p>
+    <small>(Published courses)</small>
   </div>
 
   <div class="card">
-    <h3>Completed courses</h3>
+    <h3>Completed Courses</h3>
     <p>{{ completedCourses$ | async }}</p>
+    <small>(Archived courses)</small>
   </div>
 
 </div>

@@ -21,7 +21,7 @@
   <li *ngFor="let student of filteredStudents$ | async">
     <strong>{{ student.name }}</strong><br>
     {{ student.email }}<br>
-    Courses: {{ student.courses.length }}
+    Courses: {{ student.courses_count || 0 }}
 
     <br>
 

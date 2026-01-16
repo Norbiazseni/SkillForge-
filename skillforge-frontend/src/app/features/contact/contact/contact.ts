@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { ContactService } from '../service/contact.service';
 
 @Component({
   selector: 'app-contact',
@@ -9,6 +10,7 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
   templateUrl: './contact.html'
 })
 export class Contact {
+  private contactService = inject(ContactService);
 
   submitted = false;
 
@@ -25,8 +27,18 @@ export class Contact {
   submit() {
     if (this.form.invalid) return;
 
-    console.log('Contact form data:', this.form.value);
-    this.submitted = true;
-    this.form.reset();
+    const contactData = this.form.value;
+    console.log('Contact form data:', contactData);
+
+    this.contactService.sendMessage(contactData).subscribe({
+      next: (response) => {
+        console.log('✅ Message sent successfully:', response);
+        this.submitted = true;
+        this.form.reset();
+      },
+      error: (error) => {
+        console.error('❌ Failed to send message:', error);
+      }
+    });
   }
 }

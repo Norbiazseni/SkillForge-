@@ -27,6 +27,15 @@
 
       <p class="course-description">{{ course.description }}</p>
 
+      <div class="course-meta" *ngIf="course.difficulty || course.instructor_id">
+        <span *ngIf="course.difficulty" class="meta-item">
+          📚 {{ course.difficulty }}
+        </span>
+        <span *ngIf="course.instructor_id" class="meta-item">
+          👨‍🏫 Instructor ID: {{ course.instructor_id }}
+        </span>
+      </div>
+
       <div class="course-actions">
         <a class="edit-link" [routerLink]="['/courses', course.id, 'edit']">
           Edit
