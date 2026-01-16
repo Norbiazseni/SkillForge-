@@ -1,0 +1,10 @@
+a {
+  display: inline-block;
+  margin-top: 16px;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

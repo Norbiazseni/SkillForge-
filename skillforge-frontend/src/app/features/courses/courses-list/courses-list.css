@@ -1,0 +1,44 @@
+.add-btn {
+  height: 40px;
+  padding: 0 16px;
+  margin-bottom: 16px;
+  border: none;
+  border-radius: 6px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+
+.course-list {
+  list-style: none;
+  padding: 0;
+}
+
+.course-card {
+  background: white;
+  padding: 16px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.badge {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: white;
+}
+
+.active {
+  background: #16a34a;
+}
+
+.planned {
+  background: #2563eb;
+}
+
+.completed {
+  background: #1e293b;
+}
