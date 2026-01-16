@@ -1,6 +1,12 @@
 <div class="courses-container">
   <div class="header">
     <h1>Courses</h1>
+    <input
+        type="text"
+        placeholder="Search courses..."
+        #searchInput
+        (input)="onSearch(searchInput.value)"/>
+
     <button class="add-btn" routerLink="/courses/new">
       + Add Course
     </button>

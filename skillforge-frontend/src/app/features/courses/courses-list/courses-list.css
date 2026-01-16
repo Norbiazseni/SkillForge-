@@ -13,6 +13,27 @@
   margin: 0;
 }
 
+.header input[type="text"] {
+  flex: 1;
+  max-width: 300px;
+  height: 40px;
+  padding: 0 16px;
+  margin: 0 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.header input[type="text"]:focus {
+  border-color: #2563eb;
+}
+
+.header input[type="text"]::placeholder {
+  color: #9ca3af;
+}
+
 .add-btn {
   height: 40px;
   padding: 0 20px;
