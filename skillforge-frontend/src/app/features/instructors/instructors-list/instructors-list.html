@@ -1,0 +1,17 @@
+<h1>Instructors</h1>
+
+<a routerLink="/instructors/new">➕ Add instructor</a>
+
+<ul>
+  <li *ngFor="let instructor of instructors">
+    <strong>{{ instructor.name }}</strong><br>
+    {{ instructor.email }}<br>
+    Expertise: {{ instructor.expertise }}
+
+    <br>
+
+    <a [routerLink]="['/instructors', instructor.id, 'edit']">✏️ Edit</a>
+    |
+    <button (click)="delete(instructor.id)">🗑 Delete</button>
+  </li>
+</ul>

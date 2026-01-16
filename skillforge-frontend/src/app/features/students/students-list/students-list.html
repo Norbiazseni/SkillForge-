@@ -2,9 +2,23 @@
 
 <a routerLink="/students/new">➕ Add student</a>
 
+<br><br>
+
+<input
+  type="text"
+  placeholder="Search by name"
+  (input)="setSearch($any($event.target).value)"
+>
+
+<select (change)="setSort($any($event.target).value)">
+  <option value="name">Sort by name</option>
+  <option value="email">Sort by email</option>
+</select>
+
+<br><br>
 
 <ul>
-  <li *ngFor="let student of students">
+  <li *ngFor="let student of filteredStudents$ | async">
     <strong>{{ student.name }}</strong><br>
     {{ student.email }}<br>
     Courses: {{ student.courses.length }}

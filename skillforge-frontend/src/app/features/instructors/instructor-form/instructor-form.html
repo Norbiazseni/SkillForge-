@@ -1,0 +1,30 @@
+<h1>{{ isEdit ? 'Edit instructor' : 'New instructor' }}</h1>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+  <label>
+    Name<br>
+    <input formControlName="name">
+  </label>
+
+  <br><br>
+
+  <label>
+    Email<br>
+    <input formControlName="email">
+  </label>
+
+  <br><br>
+
+  <label>
+    Expertise<br>
+    <input formControlName="expertise">
+  </label>
+
+  <br><br>
+
+  <button type="submit">
+    {{ isEdit ? 'Update' : 'Save' }}
+  </button>
+
+</form>
