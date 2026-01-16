@@ -40,6 +40,15 @@ class StudentService
     }
 
     /**
+     * Update a student
+     */
+    public function updateStudent(int $id, array $data): Student
+    {
+        $student = $this->studentRepository->findById($id);
+        return $this->studentRepository->update($student, $data);
+    }
+
+    /**
      * Delete a student
      */
     public function deleteStudent(int $id): bool

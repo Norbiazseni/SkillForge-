@@ -58,6 +58,15 @@ class StudentRepository
     }
 
     /**
+     * Update a student
+     */
+    public function update(Student $student, array $data): Student
+    {
+        $student->update($data);
+        return $student->fresh(['courses']); // Reload with relationships
+    }
+
+    /**
      * Delete a student
      */
     public function delete(Student $student): bool

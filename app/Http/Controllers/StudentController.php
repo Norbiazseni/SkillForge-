@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreStudentRequest;
+use App\Http\Requests\UpdateStudentRequest;
 use App\Services\StudentService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -58,6 +59,21 @@ class StudentController extends Controller
         $student = $this->studentService->getStudentById($id);
 
         return response()->json([
+            'data' => $student
+        ]);
+    }
+
+    /**
+     * Update the specified student
+     * 
+     * PUT /api/students/{id}
+     */
+    public function update(UpdateStudentRequest $request, int $id): JsonResponse
+    {
+        $student = $this->studentService->updateStudent($id, $request->validated());
+
+        return response()->json([
+            'message' => 'Student updated successfully',
             'data' => $student
         ]);
     }
