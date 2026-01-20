@@ -22,7 +22,7 @@ export class DashboardService {
       .pipe(
         map(courses =>
           courses.filter(c => 
-            c.status === 'active' || c.status === 'published'
+            c.status === 'published'
           ).length
         )
       );
@@ -32,7 +32,7 @@ export class DashboardService {
       .pipe(
         map(courses =>
           courses.filter(c => 
-            c.status === 'completed' || c.status === 'archived'
+            c.status === 'archived'
           ).length
         )
       );

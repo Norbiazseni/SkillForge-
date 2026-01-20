@@ -22,9 +22,17 @@
   <br /><br />
 
   <select name="status" [(ngModel)]="course.status">
-    <option value="planned">Planned</option>
-    <option value="active">Active</option>
-    <option value="completed">Completed</option>
+    <option value="draft">Draft</option>
+    <option value="published">Published</option>
+    <option value="archived">Archived</option>
+  </select>
+
+  <br /><br />
+
+  <select name="difficulty" [(ngModel)]="course.difficulty">
+    <option value="beginner">Beginner</option>
+    <option value="intermediate">Intermediate</option>
+    <option value="advanced">Advanced</option>
   </select>
 
   <br /><br />

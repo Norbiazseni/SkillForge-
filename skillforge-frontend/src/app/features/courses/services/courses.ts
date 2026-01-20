@@ -123,11 +123,28 @@ export class CoursesService {
 
   // 🔹 UPDATE
   updateCourse(updated: Course): void {
-    this.http.put<{data: Course}>(`${this.apiUrl}/courses/${updated.id}`, updated)
+    // Build clean payload with only backend-expected fields
+    const payload: any = {
+      title: updated.title,
+      description: updated.description,
+      difficulty: updated.difficulty,
+      instructor_id: updated.instructor_id
+    };
+
+    // Only include status if it's a valid backend status
+    if (updated.status && ['draft', 'published', 'archived'].includes(updated.status)) {
+      payload.status = updated.status;
+    }
+
+    console.log('📤 Sending update payload:', payload);
+
+    this.http.put<{data: Course}>(`${this.apiUrl}/courses/${updated.id}`, payload)
       .pipe(
         tap(response => console.log('✅ Course updated on server:', response.data)),
         catchError(error => {
           console.error('❌ Error updating course:', error);
+          const errorMsg = error.error?.message || error.message || 'Unknown error';
+          alert(`Hiba a kurzus frissítése közben: ${errorMsg}`);
           throw error;
         })
       )

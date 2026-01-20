@@ -75,7 +75,9 @@ class CourseService
             throw new HttpException(400, 'Cannot archive course without description');
         }
 
-        return $this->courseRepository->update($course, $data);
+        $this->courseRepository->update($course, $data);
+
+        return $course;
     }
 
     /**

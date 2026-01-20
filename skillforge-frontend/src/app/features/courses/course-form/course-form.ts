@@ -17,7 +17,8 @@ export class CourseFormComponent implements OnInit {
   course: Partial<Course> = {
     title: '',
     description: '',
-    status: 'planned'
+    status: 'draft',
+    difficulty: 'beginner'
   };
 
   isEdit = false;

@@ -2,7 +2,7 @@ export interface Course {
   id: number;
   title: string;
   description: string;
-  status: 'planned' | 'active' | 'completed' | 'published' | 'draft' | 'archived';  // Backend státuszok is
+  status: 'draft' | 'published' | 'archived';  // Backend státuszok is
   difficulty?: 'beginner' | 'intermediate' | 'advanced';  // Backend mező
   instructor_id?: number;  // Backend mező
   instructor?: any;  // Backend mező (kapcsolt adatok)
